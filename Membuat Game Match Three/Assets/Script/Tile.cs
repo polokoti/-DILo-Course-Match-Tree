@@ -17,6 +17,10 @@ public class Tile : MonoBehaviour
 
     public bool isMatched = false;
 
+    private int previousColumn;
+    private int previousRow;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,8 +88,10 @@ public class Tile : MonoBehaviour
     }
     void MoveTile()
     {
-        //previousColumn = column;
-        //previousRow = row;
+        previousColumn = column;
+        previousRow = row;
+
+        StartCoroutine(checkMove());
 
         if (swipeAngle > -45 && swipeAngle <= 45)
         {
@@ -107,6 +113,8 @@ public class Tile : MonoBehaviour
             //Down swipe
             SwipeDownMove();
         }
+
+        StartCoroutine(checkMove());
     }
     //Method untuk menentukan arah dari swipe
     void SwipeRightMove()
@@ -191,5 +199,26 @@ public class Tile : MonoBehaviour
             sprite.color = Color.grey;
         }
 
+    }
+
+    IEnumerator checkMove()
+    {
+        yield return new WaitForSeconds(.5f);
+        // jika tile sama kembalikan, jika sama destroy
+        if(otherTile != null)
+        {
+            if(!isMatched && !otherTile.GetComponent<Tile>().isMatched)
+            {
+                otherTile.GetComponent<Tile>().row = row;
+                otherTile.GetComponent<Tile>().column = column;
+                row = previousRow;
+                column = previousColumn;
+            }
+            else
+            {
+                grid.DestroyMatches();
+            }
+        }
+        otherTile = null;
     }
 }
