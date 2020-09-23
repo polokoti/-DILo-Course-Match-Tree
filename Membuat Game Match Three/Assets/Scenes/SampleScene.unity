@@ -230,6 +230,7 @@ MonoBehaviour:
   - {fileID: 2931732589671356173, guid: 94e6de5983735384baab53b2e6d397d9, type: 3}
   - {fileID: 518305475872957386, guid: a2adf58439733f44db40e9d94cfbf707, type: 3}
   - {fileID: 6842092065777948302, guid: 5e1875d0f9a9f5446a5e5b71590b2b41, type: 3}
+  multiplier: 10
 --- !u!4 &374143717
 Transform:
   m_ObjectHideFlags: 0
@@ -587,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c576bbc72b6cba04387eb05a3228a439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeStart: 3
+  timeStart: 60
   textBox: {fileID: 766993441}
   timerIsRunning: 0
 --- !u!1 &897065505

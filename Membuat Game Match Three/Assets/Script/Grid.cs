@@ -12,6 +12,9 @@ public class Grid : MonoBehaviour
     public GameObject[] candies;
     public GameObject[,] tiles;
 
+    public int multiplier;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,9 +98,11 @@ public class Grid : MonoBehaviour
     {
         if (tiles[column, row].GetComponent<Tile>().isMatched)
         {
+            multiplier = 2;
+
             GameObject gm = tiles[column, row];
             gm.SetActive(false);
-            GameManager.instance.GetScore(10);
+            GameManager.instance.GetScore(10 * multiplier) ;
             //tiles[column, row].gameObject.SetActive(false);
             tiles[column, row] = null;
         }

@@ -30,6 +30,7 @@ public class Tile : MonoBehaviour
         yPosition = transform.position.y;
         column = Mathf.RoundToInt((xPosition - grid.startPos.x) / grid.offset.x);
         row = Mathf.RoundToInt((yPosition - grid.startPos.y) / grid.offset.x);
+
     }
     // Update is called once per frame
     void Update()

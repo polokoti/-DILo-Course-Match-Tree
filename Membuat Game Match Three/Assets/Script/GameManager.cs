@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     int playerScore;
     public Text scoreText;
 
+
     // Singleton
     void Start()
     {
