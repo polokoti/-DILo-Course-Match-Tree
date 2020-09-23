@@ -40,6 +40,13 @@ public class Grid : MonoBehaviour
                 backgroundTile.name = "(" + x + "." + y + ")";
 
                 int index = Random.Range(0, candies.Length);
+                int MAX_ITERATION = 0;
+                while (MatchesAt(x, y, candies[index]) && MAX_ITERATION < 100)
+                {
+                    index = Random.Range(0, candies.Length);
+                    MAX_ITERATION++;
+                }
+                MAX_ITERATION = 0;
 
                 //create object
                 GameObject candy = Instantiate(candies[index], pos, Quaternion.identity);
@@ -50,9 +57,33 @@ public class Grid : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private bool MatchesAt(int column, int row, GameObject piece)
     {
-        
+        if(column > 1 && row > 1)
+        {
+            if(tiles[column -1 , row].tag == piece.tag && tiles[column - 2, row].tag == piece.tag)
+            {
+                return true;
+            }
+        }
+        else if(column <= 1 || row <= 1)
+        {
+            if(row > 1)
+            {
+                if(tiles[column, row - 1].tag == piece.tag && tiles[column, row - 2].tag == piece.tag)
+                {
+                    return true;
+                }
+            }
+            if(column > 1)
+            {
+                if(tiles[column - 1, row].tag == piece.tag && tiles[column - 2, row].tag == piece.tag)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+
 }

@@ -14,6 +14,9 @@ public class Tile : MonoBehaviour
     public int row;
     private Grid grid;
     private GameObject otherTile;
+
+    public bool isMatched = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +30,11 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckMatches();
         xPosition = (column * grid.offset.x) + grid.startPos.x;
         yPosition = (row * grid.offset.y) + grid.startPos.y;
         SwipeTile();
+
     }
     void OnMouseDown()
     {
@@ -143,5 +148,48 @@ public class Tile : MonoBehaviour
             otherTile.GetComponent<Tile>().row += 1;
             row -= 1;
         }
+    }
+
+    void CheckMatches()
+    {
+        // check horizontal matching
+        if (column > 0 && column < grid.gridSizeX -1)
+        {
+            // check left and right
+            GameObject leftTile = grid.tiles[column - 1, row];
+            GameObject rightTile = grid.tiles[column + 1, row];
+            if(leftTile != null && rightTile != null)
+            {
+                if(leftTile.CompareTag(gameObject.tag) && rightTile.CompareTag(gameObject.tag))
+                {
+                    isMatched = true;
+                    rightTile.GetComponent<Tile>().isMatched = true;
+                    leftTile.GetComponent<Tile>().isMatched = true;
+                }
+            }
+        }
+        //check vertical matching
+        if(row > 0 && row < grid.gridSizeY -1)
+        {
+            //check above and below
+            GameObject upTile = grid.tiles[column, row + 1];
+            GameObject downTile = grid.tiles[column, row - 1];
+            if(upTile != null && downTile != null)
+            {
+                if(upTile.CompareTag(gameObject.tag) && downTile.CompareTag(gameObject.tag))
+                {
+                    isMatched = true;
+                    downTile.GetComponent<Tile>().isMatched = true;
+                    upTile.GetComponent<Tile>().isMatched = true;
+                }
+            }
+        }
+
+        if (isMatched)
+        {
+            SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+            sprite.color = Color.grey;
+        }
+
     }
 }
